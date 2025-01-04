@@ -3,6 +3,7 @@ import react from '@vitejs/plugin-react';
 import { defineConfig } from 'vite';
 import environment from 'vite-plugin-environment';
 import dotenv from 'dotenv';
+import postcss from './postcss.config.js'; // Ensure this path is correct
 
 dotenv.config({ path: '../../.env' });
 
@@ -16,6 +17,9 @@ export default defineConfig({
         global: "globalThis",
       },
     },
+  },
+  css: {
+    postcss, // Integrate PostCSS if necessary
   },
   server: {
     proxy: {
