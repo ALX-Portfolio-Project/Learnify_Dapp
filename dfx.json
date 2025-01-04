@@ -1,0 +1,27 @@
+{
+  "canisters": {
+    "Learnify_Dapp_backend": {
+      "candid": "src/Learnify_Dapp_backend/Learnify_Dapp_backend.did",
+      "package": "Learnify_Dapp_backend",
+      "type": "rust"
+    },
+    "Learnify_Dapp_frontend": {
+      "dependencies": [
+        "Learnify_Dapp_backend"
+      ],
+      "source": [
+        "src/Learnify_Dapp_frontend/dist"
+      ],
+      "type": "assets",
+      "workspace": "Learnify_Dapp_frontend"
+    }
+  },
+  "defaults": {
+    "build": {
+      "args": "",
+      "packtool": ""
+    }
+  },
+  "output_env_file": ".env",
+  "version": 1
+}
