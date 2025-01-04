@@ -1,5 +1,5 @@
 [workspace]
 members = [
-    "src/Learnify_Dapp_backend"
+    "src/learnify_dapp_backend"
 ]
 resolver = "2"

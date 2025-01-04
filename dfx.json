@@ -1,19 +1,19 @@
 {
   "canisters": {
-    "Learnify_Dapp_backend": {
-      "candid": "src/Learnify_Dapp_backend/Learnify_Dapp_backend.did",
-      "package": "Learnify_Dapp_backend",
+    "learnify_dapp_backend": {
+      "candid": "src/learnify_dapp_backend/learnify_dapp_backend.did",
+      "package": "learnify_dapp_backend",
       "type": "rust"
     },
-    "Learnify_Dapp_frontend": {
+    "learnify_dapp_frontend": {
       "dependencies": [
-        "Learnify_Dapp_backend"
+        "learnify_dapp_backend"
       ],
       "source": [
-        "src/Learnify_Dapp_frontend/dist"
+        "src/learnify_dapp_frontend/dist"
       ],
       "type": "assets",
-      "workspace": "Learnify_Dapp_frontend"
+      "workspace": "learnify_dapp_frontend"
     }
   },
   "defaults": {

@@ -1,5 +1,5 @@
 [package]
-name = "Learnify_Dapp_backend"
+name = "learnify_dapp_backend"
 version = "0.1.0"
 edition = "2021"
 
