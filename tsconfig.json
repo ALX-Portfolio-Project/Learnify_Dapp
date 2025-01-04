@@ -6,6 +6,18 @@
         "strictPropertyInitialization": false,
         "moduleResolution": "node",
         "allowJs": true,
-        "outDir": "HACK_BECAUSE_OF_ALLOW_JS"
-    }
+        "outDir": "dist",
+        "esModuleInterop": true,
+        "skipLibCheck": true,
+        "forceConsistentCasingInFileNames": true,
+        "resolveJsonModule": true,
+        "jsx": "react-jsx",
+        "module": "ESNext",
+        "baseUrl": ".",
+        "paths": {
+            "@/*": ["src/*"]
+        }
+    },
+    "include": ["src/**/*"],
+    "exclude": ["node_modules", "dist"]
 }
