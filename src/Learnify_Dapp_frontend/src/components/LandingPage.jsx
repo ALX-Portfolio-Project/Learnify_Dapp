@@ -11,7 +11,7 @@ export default function LandingPage() {
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-[#0A2533] to-[#1a1a3a]">
+    <div className="min-h-screen bg-[#14323f]">
       {/* Navigation */}
       <motion.nav 
         initial={{ y: -20, opacity: 0 }}
@@ -19,27 +19,22 @@ export default function LandingPage() {
         transition={{ duration: 0.5 }}
         className="flex items-center justify-between px-8 py-6"
       >
-        <span className="text-white text-2xl font-semibold cursor-pointer">
-          Learnify
-        </span>
-        
-        <div className="hidden md:flex items-center space-x-8">
-          {['Tutorials', 'Marketplace', 'Community', 'Dashboard'].map((item) => (
-            <span key={item} className="text-gray-300 hover:text-white transition-colors cursor-pointer">
-              {item}
-            </span>
-          ))}
-          <div className="relative group">
-            <button className="text-gray-300 hover:text-white transition-colors flex items-center">
-              Resources
-              <ChevronDown className="ml-1 h-4 w-4" />
-            </button>
-          </div>
+        <div className="flex items-center">
+          {/* Logo can be added here */}
         </div>
-
-        <button className="relative overflow-hidden group bg-white bg-opacity-10 backdrop-blur-lg text-white px-6 py-2 rounded-full font-medium transition-all hover:bg-opacity-20 border border-white/20">
+        
+        <button 
+          className="relative overflow-hidden group bg-white bg-opacity-10 backdrop-blur-lg text-white px-4 py-2 rounded-md font-medium transition-all border border-white/20 flex items-center"
+          style={{ boxShadow: "0 0 15px rgba(255, 255, 255, 0.5)" }}
+        >
           <span className="relative z-10">Connect Wallet</span>
-          <div className="absolute inset-0 -z-10 bg-gradient-to-r from-purple-500/50 to-blue-500/50 opacity-0 group-hover:opacity-100 transition-opacity" />
+          <div className="absolute inset-0 -z-10 bg-gradient-to-r from-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity" />
+          <motion.div 
+            className="absolute inset-0 rounded-md border border-white/20"
+            animate={{ backgroundPosition: ['0% 0%', '100% 0%'] }}
+            transition={{ duration: 2, ease: "linear", repeat: Infinity }}
+            style={{ background: 'linear-gradient(90deg, rgba(255, 255, 255, 0.2), rgba(255, 255, 255, 0.5), rgba(255, 255, 255, 0.2))' }}
+          />
         </button>
       </motion.nav>
 
@@ -59,49 +54,47 @@ export default function LandingPage() {
               variants={fadeIn}
               className="uppercase text-purple-400 tracking-wider text-sm font-medium"
             >
-              CRYPTO EDUCATION PLATFORM
+              The Future of Crypto Education
             </motion.div>
             
             <motion.h1 
               variants={fadeIn}
-              className="text-white text-5xl md:text-6xl lg:text-7xl font-light leading-tight"
+              className="text-yellow-400 text-4xl md:text-5xl lg:text-6xl font-bold leading-tight"
               style={{ fontFamily: 'Syne, sans-serif' }}
             >
               Learn Crypto,<br />
-              Earn Rewards.
+              <span className="text-white">Understand Finance.</span>
             </motion.h1>
             
             <motion.p 
               variants={fadeIn}
               className="text-gray-300 text-lg max-w-xl"
             >
-              Master cryptocurrency fundamentals through interactive tutorials, gamified learning, 
-              and hands-on practice. Set goals, earn rewards, and join a community of crypto enthusiasts 
-              while building your financial future.
+              Learnify is a platform that helps you learn about finance and cryptocurrency through interactive tutorials, gamified learning.
             </motion.p>
             
             <motion.div 
               variants={fadeIn}
-              className="flex flex-wrap gap-4"
+              className="flex flex-wrap gap-2"
             >
               <motion.button 
-                className="relative overflow-hidden group bg-white bg-opacity-10 backdrop-blur-lg text-white px-6 py-2 rounded-md font-medium transition-all border border-white/20 flex items-center"
+                className="relative overflow-hidden group bg-white bg-opacity-10 backdrop-blur-lg text-white px-4 py-1.5 rounded-md font-medium transition-all border border-white/20 flex items-center"
                 style={{ boxShadow: "0 0 15px rgba(255, 255, 255, 0.5)" }}
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}
               >
-                <motion.div whileHover={{ scale: 1.2 }} className="mr-2 h-5 w-5">
+                <motion.div whileHover={{ scale: 1.2 }} className="mr-2 h-4 w-4">
                   <Play />
                 </motion.div>
                 <span className="relative z-10">Start Learning</span>
                 <div className="absolute inset-0 -z-10 bg-gradient-to-r from-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity" />
               </motion.button>
               <motion.button 
-                className="relative overflow-hidden group bg-white/5 backdrop-blur-lg text-white px-6 py-2 rounded-md font-medium transition-all hover:bg-opacity-10 border border-white/20 flex items-center"
+                className="relative overflow-hidden group bg-white/5 backdrop-blur-lg text-white px-4 py-1.5 rounded-md font-medium transition-all hover:bg-opacity-10 border border-white/20 flex items-center"
                 whileHover={{ scale: 1.05, boxShadow: "0 0 15px rgba(255, 255, 255, 0.5)" }}
                 whileTap={{ scale: 0.95 }}
               >
-                <motion.div whileHover={{ scale: 1.2 }} className="mr-2 h-5 w-5">
+                <motion.div whileHover={{ scale: 1.2 }} className="mr-2 h-4 w-4">
                   <BookOpen />
                 </motion.div>
                 <span className="relative z-10">View Tutorials</span>
