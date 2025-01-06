@@ -1,0 +1,8 @@
+type Result = variant { Ok: text; Err: text };
+
+service : {
+    "register_user": (text) -> (Result);
+    "get_user_role": () -> (Result) query;
+    "restricted_action": () -> (Result);
+    "is_user_registered": () -> (bool) query;
+}
