@@ -121,3 +121,43 @@ fn get_savings_goals() -> Vec<SavingsGoal> {
 
     savings_data.get(&caller).cloned().unwrap_or_else(Vec::new)
 }
+// ---------- Staking Simulator ----------
+#[update]
+fn simulate_stake(amount: u64, reward_rate: f64) -> Result<String, String> {
+    let caller = ic_cdk::caller();
+    let mut staking = STAKING.lock().unwrap();
+
+    if staking.contains_key(&caller) {
+        return Err("An active staking session already exists.".to_string());
+    }
+
+    let start_time = ic_cdk::api::time() / 1_000_000_000; // Convert nanoseconds to seconds
+    staking.insert(
+        caller,
+        StakingInfo {
+            amount,
+            start_time,
+            reward_rate,
+        },
+    );
+
+    Ok("Staking simulation started.".to_string())
+}
+
+#[query]
+fn get_staking_summary() -> Result<String, String> {
+    let caller = ic_cdk::caller();
+    let staking = STAKING.lock().unwrap();
+
+    if let Some(info) = staking.get(&caller) {
+        let current_time = ic_cdk::api::time() / 1_000_000_000; // Convert to seconds
+        let elapsed_time = current_time - info.start_time;
+        let reward = (info.amount as f64 * info.reward_rate * elapsed_time as f64).round();
+
+        return Ok(format!(
+            "Staked: {}, Reward: {:.2}",
+            info.amount, reward
+        ));
+    }
+    Err("No active staking session.".to_string())
+}
