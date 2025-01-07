@@ -161,3 +161,27 @@ fn get_staking_summary() -> Result<String, String> {
     }
     Err("No active staking session.".to_string())
 }
+// ---------- Wallet Integration ----------
+#[update]
+fn create_wallet() -> String {
+    let caller = ic_cdk::caller();
+    let mut wallets = WALLETS.lock().unwrap();
+
+    if wallets.contains_key(&caller) {
+        return "Wallet already exists.".to_string();
+    }
+
+    wallets.insert(caller, Wallet { tokens: 0 });
+    "Wallet created successfully!".to_string()
+}
+
+#[query]
+fn get_wallet_balance() -> Result<u64, String> {
+    let caller = ic_cdk::caller();
+    let wallets = WALLETS.lock().unwrap();
+
+    wallets
+        .get(&caller)
+        .map(|wallet| wallet.tokens)
+        .ok_or_else(|| "Wallet not found.".to_string())
+}
