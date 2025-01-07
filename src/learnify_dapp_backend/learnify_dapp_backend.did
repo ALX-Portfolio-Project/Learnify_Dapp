@@ -1,8 +1,19 @@
 type Result = variant { Ok: text; Err: text };
+type SavingsGoal = record {
+    description: text;
+    target_amount: nat;
+    current_amount: nat;
+};
 
 service : {
+    // Milestone 1: Authentication and Authorization
     "register_user": (text) -> (Result);
     "get_user_role": () -> (Result) query;
     "restricted_action": () -> (Result);
     "is_user_registered": () -> (bool) query;
+
+    // Milestone 2: Savings and Goals Management
+    "set_savings_goal": (text, nat) -> (text);
+    "update_savings_progress": (nat, nat) -> (Result);
+    "get_savings_goals": () -> (vec SavingsGoal) query;
 }

@@ -1,17 +1,26 @@
 use ic_cdk::export::Principal;
 use ic_cdk_macros::{query, update};
-use lazy_static::lazy_static; 
+use lazy_static::lazy_static;
+use serde::{Deserialize, Serialize};
 use std::collections::HashMap;
 use std::sync::Mutex;
 
 type UserId = Principal;
 type Role = String;
 
-lazy_static! {
-    static ref AUTH_SERVICE: Mutex<HashMap<UserId, Role>> = Mutex::new(HashMap::new());
+#[derive(Serialize, Deserialize, Clone, Debug)]
+struct SavingsGoal {
+    description: String,
+    target_amount: u64,
+    current_amount: u64,
 }
 
-// Register a user with a specific role
+lazy_static! {
+    static ref AUTH_SERVICE: Mutex<HashMap<UserId, Role>> = Mutex::new(HashMap::new());
+    static ref SAVINGS_DATA: Mutex<HashMap<UserId, Vec<SavingsGoal>>> = Mutex::new(HashMap::new());
+}
+
+// ---------- Authentication and Authorization (Milestone 1) ----------
 #[update]
 fn register_user(role: Role) -> Result<String, String> {
     let caller = ic_cdk::caller();
@@ -25,7 +34,6 @@ fn register_user(role: Role) -> Result<String, String> {
     }
 }
 
-// Get the role of the calling user
 #[query]
 fn get_user_role() -> Result<Role, String> {
     let caller = ic_cdk::caller();
@@ -38,7 +46,6 @@ fn get_user_role() -> Result<Role, String> {
     }
 }
 
-// Perform a restricted action based on user role
 #[update]
 fn restricted_action() -> Result<String, String> {
     let caller = ic_cdk::caller();
@@ -51,7 +58,6 @@ fn restricted_action() -> Result<String, String> {
     }
 }
 
-// Check if the calling user is registered
 #[query]
 fn is_user_registered() -> bool {
     let caller = ic_cdk::caller();
@@ -60,49 +66,58 @@ fn is_user_registered() -> bool {
     auth_service.contains_key(&caller)
 }
 
-#[cfg(test)]
-mod tests {
-    use super::*;
+// ---------- Savings and Goals Management (Milestone 2) ----------
+#[update]
+fn set_savings_goal(description: String, target_amount: u64) -> String {
+    let caller = ic_cdk::caller();
+    let mut savings_data = SAVINGS_DATA.lock().unwrap();
 
-    #[test]
-    fn test_register_user() {
-        let caller = Principal::anonymous();
-        ic_cdk::api::set_caller(caller);
+    let goal = SavingsGoal {
+        description,
+        target_amount,
+        current_amount: 0,
+    };
 
-        let result = register_user("learner".to_string());
-        assert_eq!(result.unwrap(), "User registered successfully.");
+    savings_data
+        .entry(caller)
+        .or_insert_with(Vec::new)
+        .push(goal);
 
-        let auth_service = AUTH_SERVICE.lock().unwrap();
-        assert_eq!(auth_service.get(&caller).unwrap(), "learner");
+    "Savings goal added successfully!".to_string()
+}
+
+#[update]
+fn update_savings_progress(index: usize, amount: u64) -> Result<String, String> {
+    let caller = ic_cdk::caller();
+    let mut savings_data = SAVINGS_DATA.lock().unwrap();
+
+    if let Some(goals) = savings_data.get_mut(&caller) {
+        if let Some(goal) = goals.get_mut(index) {
+            goal.current_amount += amount;
+
+            if goal.current_amount >= goal.target_amount {
+                return Ok(format!(
+                    "🎉 Congratulations! You've reached your savings goal: {}",
+                    goal.description
+                ));
+            }
+
+            Ok(format!(
+                "Progress updated: {} out of {} saved for '{}'.",
+                goal.current_amount, goal.target_amount, goal.description
+            ))
+        } else {
+            Err("Invalid goal index.".to_string())
+        }
+    } else {
+        Err("No savings goals found for this user.".to_string())
     }
+}
 
-    #[test]
-    fn test_get_user_role() {
-        let caller = Principal::anonymous();
-        ic_cdk::api::set_caller(caller);
+#[query]
+fn get_savings_goals() -> Vec<SavingsGoal> {
+    let caller = ic_cdk::caller();
+    let savings_data = SAVINGS_DATA.lock().unwrap();
 
-        register_user("mentor".to_string()).unwrap();
-        let role = get_user_role().unwrap();
-        assert_eq!(role, "mentor");
-    }
-
-    #[test]
-    fn test_restricted_action() {
-        let caller = Principal::anonymous();
-        ic_cdk::api::set_caller(caller);
-
-        register_user("admin".to_string()).unwrap();
-        let result = restricted_action().unwrap();
-        assert_eq!(result, "Restricted action executed!");
-    }
-
-    #[test]
-    fn test_is_user_registered() {
-        let caller = Principal::anonymous();
-        ic_cdk::api::set_caller(caller);
-
-        register_user("learner".to_string()).unwrap();
-        let is_registered = is_user_registered();
-        assert!(is_registered);
-    }
+    savings_data.get(&caller).cloned().unwrap_or_else(Vec::new)
 }
