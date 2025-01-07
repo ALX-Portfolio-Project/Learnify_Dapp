@@ -1,19 +1,57 @@
 type Result = variant { Ok: text; Err: text };
+type Wallet = record {
+    tokens: nat;
+};
+type Badge = record {
+    name: text;
+    description: text;
+};
+type LeaderboardEntry = record {
+    user_id: principal;
+    score: nat;
+};
 type SavingsGoal = record {
     description: text;
     target_amount: nat;
     current_amount: nat;
 };
+type StakingSummary = record {
+    amount_staked: nat;
+    reward_earned: float64;
+};
 
 service : {
-    // Milestone 1: Authentication and Authorization
+    // Authentication and Authorization
     "register_user": (text) -> (Result);
     "get_user_role": () -> (Result) query;
     "restricted_action": () -> (Result);
     "is_user_registered": () -> (bool) query;
 
-    // Milestone 2: Savings and Goals Management
+    // Savings and Goals Management
     "set_savings_goal": (text, nat) -> (text);
     "update_savings_progress": (nat, nat) -> (Result);
     "get_savings_goals": () -> (vec SavingsGoal) query;
+
+    // Staking Simulator
+    "simulate_stake": (nat, float64) -> (Result);
+    "get_staking_summary": () -> (variant { Ok: StakingSummary; Err: text }) query;
+    "stop_staking_simulation": () -> (Result);
+
+    // Gamification Elements
+    "award_badge": (text, text) -> (text);
+    "get_badges": () -> (vec Badge) query;
+    "update_leaderboard": (nat) -> (text);
+    "get_leaderboard": () -> (vec LeaderboardEntry) query;
+
+    // Decentralized Wallet Integration
+    "create_wallet": () -> (text);
+    "add_tokens": (nat) -> (text);
+    "get_wallet_balance": () -> (variant { Ok: nat; Err: text }) query;
+
+    // Community Features
+    "request_mentorship": (text) -> (text);
+    "get_mentorship_requests": () -> (vec record { user_id: principal; messages: vec text }) query;
+
+    // Incentives
+    "reward_tokens": (nat) -> (text);
 }

@@ -1,13 +1,17 @@
 [package]
 name = "learnify_dapp_backend"
-version = "0.2.0"
+version = "1.0.0"
 edition = "2021"
 
 [dependencies]
-ic-cdk = "0.6.0"
-ic-cdk-macros = "0.6.0"
-serde = { version = "1.0", features = ["derive"] }
-lazy_static = "1.4.0"
+ic-cdk = "0.6.0" # Core library for ICP canisters
+ic-cdk-macros = "0.6.0" # Macros for canisters
+serde = { version = "1.0", features = ["derive"] } # For serializing and deserializing data
+lazy_static = "1.4.0" # For global thread-safe storage
+rand = "0.8" # For randomization (e.g., in gamification)
 
 [lib]
-crate-type = ["cdylib"]
+crate-type = ["cdylib"] # Required for ICP canisters
+
+[profile.release]
+opt-level = "z" # Optimize for size to fit ICP canister limits
