@@ -7,6 +7,7 @@ import CallToAction from './components/CallToAction.jsx';
 import Footer from './components/Footer.jsx';
 import HowItWorks from './components/Howitworks.jsx';
 import Dashboard from './components/Dashboard.jsx';
+import Achievements from './components/Achievements';
 
 const App = () => {
   return (
@@ -24,6 +25,7 @@ const App = () => {
             </div>
           } />
           <Route path="/dashboard/*" element={<Dashboard />} />
+          <Route path="/achievements" element={<Achievements />} />
         </Routes>
       </div>
     </Router>
