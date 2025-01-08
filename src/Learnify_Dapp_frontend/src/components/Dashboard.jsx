@@ -1,5 +1,5 @@
 import React from 'react';
-import { Routes, Route, Navigate, Link, useNavigate } from 'react-router-dom';
+import { Routes, Route, Navigate, Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import Sidebar from './Sidebar';
 import { Settings as SettingsIcon } from 'lucide-react';
@@ -16,13 +16,6 @@ import Settings from './Settings';
 import ICPLearningWheel from './ICPLearningWheel';
 
 export default function Dashboard() {
-  const navigate = useNavigate();
-
-  const handleLogout = () => {
-    // Perform any logout logic here (e.g., clearing tokens, etc.)
-    navigate('/'); // Redirect to the landing page
-  };
-
   return (
     <div className="flex min-h-screen bg-gray-100">
       <Sidebar />
