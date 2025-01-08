@@ -4,6 +4,7 @@ import { ChevronDown, Play, Wallet } from 'lucide-react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { FaChevronDown, FaCrown, FaCoins, FaStore, FaUsers, FaRocket, FaLeaf } from 'react-icons/fa'
 import { useState } from 'react'
+import { Link } from 'react-router-dom'
 
 
 export default function LandingPage() {
@@ -70,29 +71,16 @@ export default function LandingPage() {
                 variants={fadeIn}
                   className="flex flex-wrap gap-4"
                 >
-                  <motion.button 
-                    className="relative overflow-hidden group bg-white bg-opacity-10 backdrop-blur-lg text-white px-3 py-1 rounded-md font-medium transition-all border border-white/20 flex items-center"
-                    style={{ boxShadow: "0 0 15px rgba(255, 255, 255, 0.5)" }}
-                    whileHover={{ scale: 1.05 }}
-                    whileTap={{ scale: 0.95 }}
-                  >
-                    <motion.div whileHover={{ scale: 1.2 }} className="mr-2 h-4 w-4">
-                      <Play />
-                    </motion.div>
-                  <span className="relative z-10">Start Learning</span>
-                    <div className="absolute inset-0 -z-10 bg-gradient-to-r from-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity" />
-                  </motion.button>
-                  <motion.button 
-                    className="relative overflow-hidden group bg-white/5 backdrop-blur-lg text-white px-3 py-1 rounded-md font-medium transition-all hover:bg-opacity-10 border border-white/20 flex items-center"
-                    whileHover={{ scale: 1.05, boxShadow: "0 0 15px rgba(255, 255, 255, 0.5)" }}
-                    whileTap={{ scale: 0.95 }}
-                  >
-                    <motion.div whileHover={{ scale: 1.2 }} className="mr-2 h-4 w-4">
-                      <Wallet />
-                    </motion.div>
-                  <span className="relative z-10">Connect to Wallet</span>
-                    <div className="absolute inset-0 -z-10 bg-gradient-to-r from-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity" />
-                  </motion.button>
+                  <Link to="/dashboard">
+                    <motion.button 
+                      className="relative overflow-hidden group bg-white bg-opacity-10 backdrop-blur-lg text-white px-3 py-1 rounded-md font-medium transition-all border border-white/20 flex items-center"
+                      style={{ boxShadow: "0 0 15px rgba(255, 255, 255, 0.5)" }}
+                      whileHover={{ scale: 1.05 }}
+                      whileTap={{ scale: 0.95 }}
+                    >
+                      Launch Dapp
+                    </motion.button>
+                  </Link>
               </motion.div>
 
               <motion.div 
