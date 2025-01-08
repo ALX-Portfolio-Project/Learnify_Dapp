@@ -81,3 +81,11 @@ p {
 .animate-windshield-glow {
   animation: windshieldGlow 1.5s infinite;
 }
+
+.hide-scrollbar {
+  &::-webkit-scrollbar {
+    display: none;
+  }
+  overflow: -moz-scrollbars-none;
+  -ms-overflow-style: none;
+}

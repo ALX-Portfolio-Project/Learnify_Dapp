@@ -1,6 +1,9 @@
 import React from 'react';
-import { Routes, Route } from 'react-router-dom';
+import { Routes, Route, Navigate } from 'react-router-dom';
+import { motion } from 'framer-motion';
 import Sidebar from './Sidebar';
+
+// Import dashboard pages
 import Overview from './Overview';
 import Learning from './Learning';
 import Achievements from './Achievements';
@@ -12,19 +15,22 @@ import Settings from './Settings';
 
 export default function Dashboard() {
   return (
-    <div className="flex min-h-screen">
+    <div className="flex min-h-screen bg-gray-100">
       <Sidebar />
-      <div className="flex-1">
-        <Routes>
-          <Route path="/" element={<Overview />} />
-          <Route path="/learning" element={<Learning />} />
-          <Route path="/achievements" element={<Achievements />} />
-          <Route path="/wallet" element={<Wallet />} />
-          <Route path="/staking" element={<Staking />} />
-          <Route path="/community" element={<Community />} />
-          <Route path="/analytics" element={<Analytics />} />
-          <Route path="/settings" element={<Settings />} />
-        </Routes>
+      
+      <div className="flex-1 ml-64">
+        <div className="py-12 px-8">
+          <Routes>
+            <Route path="/" element={<Overview />} />
+            <Route path="/learning" element={<Learning />} />
+            <Route path="/achievements" element={<Achievements />} />
+            <Route path="/wallet" element={<Wallet />} />
+            <Route path="/staking" element={<Staking />} />
+            <Route path="/community" element={<Community />} />
+            <Route path="/analytics" element={<Analytics />} />
+            <Route path="/settings" element={<Settings />} />
+          </Routes>
+        </div>
       </div>
     </div>
   );
