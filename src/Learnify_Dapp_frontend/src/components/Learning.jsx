@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Search, Calendar } from 'lucide-react';
+import { useNavigate } from 'react-router-dom';
 
 const BLOCKCHAIN_COURSES = [
   {
@@ -76,6 +77,7 @@ const RARITY_COLORS = {
 
 export default function Learning() {
   const [searchQuery, setSearchQuery] = useState('');
+  const navigate = useNavigate();
 
   const containerVariants = {
     hidden: { opacity: 0 },
@@ -97,6 +99,10 @@ export default function Learning() {
         stiffness: 100
       }
     }
+  };
+
+  const handleICPClick = () => {
+    navigate('/dashboard/learning/icp-wheel');
   };
 
   return (
@@ -177,9 +183,10 @@ export default function Learning() {
                 scale: 1.02,
                 transition: { duration: 0.2 } 
               }}
+              onClick={() => course.id === 'icp' && handleICPClick()}
               className={`relative p-6 rounded-2xl h-[280px]
                 ${course.unlocked 
-                  ? 'bg-white shadow-lg' 
+                  ? 'bg-white shadow-lg cursor-pointer' 
                   : 'bg-gray-50/80 backdrop-blur-sm'
                 }
                 transition-all duration-300`}

@@ -1,7 +1,8 @@
 import React from 'react';
-import { Routes, Route, Navigate } from 'react-router-dom';
+import { Routes, Route, Navigate, Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import Sidebar from './Sidebar';
+import { Settings as SettingsIcon } from 'lucide-react';
 
 // Import dashboard pages
 import Overview from './Overview';
@@ -12,6 +13,7 @@ import Staking from './Staking';
 import Community from './Community';
 import Analytics from './Analytics';
 import Settings from './Settings';
+import ICPLearningWheel from './ICPLearningWheel';
 
 export default function Dashboard() {
   return (
@@ -23,6 +25,7 @@ export default function Dashboard() {
           <Routes>
             <Route path="/" element={<Overview />} />
             <Route path="/learning" element={<Learning />} />
+            <Route path="/learning/icp-wheel" element={<ICPLearningWheel />} />
             <Route path="/achievements" element={<Achievements />} />
             <Route path="/wallet" element={<Wallet />} />
             <Route path="/staking" element={<Staking />} />
