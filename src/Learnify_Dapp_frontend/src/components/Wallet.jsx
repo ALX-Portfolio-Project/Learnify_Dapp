@@ -203,90 +203,75 @@ export default function Wallet() {
     <div className="p-8">
       <div className="flex items-center justify-between mb-8">
         <h1 className="text-4xl font-bold text-gray-900">Wallets</h1>
-        <div className="flex items-center gap-4">
-          <motion.div 
-            className="relative flex items-center gap-3 z-[100]"
-            initial={{ opacity: 0, x: 20 }}
-            animate={{ opacity: 1, x: 0 }}
-            transition={{ duration: 0.5 }}
-          >
-            <motion.button
-              whileHover={{ scale: 1.05 }}
-              whileTap={{ scale: 0.95 }}
-              className="p-2 rounded-xl backdrop-blur-md bg-white/40 border-2 border-white/20
-                hover:border-yellow-500/50 cursor-pointer shadow-lg hover:shadow-xl 
-                transition-all duration-300"
-              onClick={() => setIsFilterOpen(!isFilterOpen)}
-            >
-              <Filter className="h-5 w-5 text-yellow-500" />
-            </motion.button>
-
-            <AnimatePresence>
-              {isFilterOpen && (
-                <>
-                  <motion.div
-                    initial={{ opacity: 0 }}
-                    animate={{ opacity: 1 }}
-                    exit={{ opacity: 0 }}
-                    className="fixed inset-0 z-[90]"
-                    onClick={() => setIsFilterOpen(false)}
-                  />
-                  <motion.div
-                    initial={{ opacity: 0, y: 10, scale: 0.95 }}
-                    animate={{ opacity: 1, y: 0, scale: 1 }}
-                    exit={{ opacity: 0, y: 10, scale: 0.95 }}
-                    className="absolute right-0 top-12 w-[220px] p-2 rounded-xl
-                      bg-white/10 backdrop-blur-xl border border-white/20
-                      shadow-[0_8px_30px_rgba(0,0,0,0.12)] z-[100]"
-                    onClick={e => e.stopPropagation()}
-                  >
-                    <div className="space-y-1">
-                      {['All', 'ICP Native', 'Multi-Chain', 'Sui Native', 'Solana'].map((category) => (
-                        <motion.button
-                          key={category}
-                          whileHover={{ scale: 1.02, x: 4 }}
-                          whileTap={{ scale: 0.98 }}
-                          onClick={() => {
-                            if (category === 'All') {
-                              setSelectedCategories([]);
-                            } else {
-                              setSelectedCategories(prev => 
-                                prev.includes(category)
-                                  ? prev.filter(c => c !== category)
-                                  : [...prev, category]
-                              );
-                            }
-                          }}
-                          className={`w-full flex items-center gap-3 px-3 py-2 rounded-lg text-sm
-                            ${selectedCategories.includes(category) || (category === 'All' && selectedCategories.length === 0)
-                              ? 'bg-white/20 backdrop-blur-sm border border-white/30'
-                              : 'hover:bg-white/10 border border-transparent'
-                            } transition-all duration-200`}
-                        >
-                          <span className={selectedCategories.includes(category) || (category === 'All' && selectedCategories.length === 0)
-                            ? 'text-white'
-                            : 'text-gray-400'
-                          }>
-                            {category}
-                          </span>
-                        </motion.button>
-                      ))}
-                    </div>
-                  </motion.div>
-                </>
-              )}
-            </AnimatePresence>
-          </motion.div>
-          <motion.div
-            initial={{ opacity: 0, x: 20 }}
-            animate={{ opacity: 1, x: 0 }}
-            className="flex items-center gap-2 text-sm text-gray-500"
-          >
-            <Calendar className="h-4 w-4" />
-            Last updated: {new Date().toLocaleDateString()}
-          </motion.div>
-        </div>
+        <motion.button
+          whileHover={{ scale: 1.05 }}
+          whileTap={{ scale: 0.95 }}
+          className="p-2 rounded-xl bg-white/40 border-2 border-white/20
+            hover:border-yellow-500/50 cursor-pointer shadow-lg hover:shadow-xl 
+            transition-all duration-300"
+          onClick={() => setIsFilterOpen(!isFilterOpen)}
+        >
+          <WalletIcon className="h-5 w-5 text-yellow-500" />
+        </motion.button>
       </div>
+
+      <AnimatePresence>
+        {isFilterOpen && (
+          <>
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              className="fixed inset-0 z-[90]"
+              onClick={() => setIsFilterOpen(false)}
+            />
+            <motion.div
+              initial={{ opacity: 0, y: 10, scale: 0.95 }}
+              animate={{ opacity: 1, y: 0, scale: 1 }}
+              exit={{ opacity: 0, y: 10, scale: 0.95 }}
+              className="absolute right-0 top-12 w-[220px] p-2 rounded-xl
+                bg-white border border-gray-300 shadow-lg z-[100]"
+              onClick={e => e.stopPropagation()}
+            >
+              <div className="space-y-1">
+                <div className="px-3 py-2 text-sm text-gray-400">
+                  Filter by Chain
+                </div>
+                {['All', 'ICP Native', 'Multi-Chain', 'Sui Native', 'Solana'].map((category) => (
+                  <motion.button
+                    key={category}
+                    whileHover={{ scale: 1.02, x: 4 }}
+                    whileTap={{ scale: 0.98 }}
+                    onClick={() => {
+                      if (category === 'All') {
+                        setSelectedCategories([]);
+                      } else {
+                        setSelectedCategories(prev => 
+                          prev.includes(category)
+                            ? prev.filter(c => c !== category)
+                            : [...prev, category]
+                        );
+                      }
+                    }}
+                    className={`w-full flex items-center gap-3 px-3 py-2 rounded-lg text-sm
+                      ${selectedCategories.includes(category) || (category === 'All' && selectedCategories.length === 0)
+                        ? 'bg-white/20 border border-gray-300'
+                        : 'hover:bg-gray-100 border border-transparent'
+                      } transition-all duration-200`}
+                  >
+                    <span className={selectedCategories.includes(category) || (category === 'All' && selectedCategories.length === 0)
+                      ? 'text-gray-800'
+                      : 'text-gray-400'
+                    }>
+                      {category}
+                    </span>
+                  </motion.button>
+                ))}
+              </div>
+            </motion.div>
+          </>
+        )}
+      </AnimatePresence>
 
       <motion.div 
         className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6"
@@ -318,7 +303,7 @@ export default function Wallet() {
               {wallet.category}
             </div>
 
-            <motion.div 
+    <motion.div
               className="text-4xl mb-4"
               whileHover={{ scale: 1.1 }}
               transition={{ type: "spring", stiffness: 300 }}
@@ -365,7 +350,7 @@ export default function Wallet() {
             </motion.button>
           </motion.div>
         ))}
-      </motion.div>
+    </motion.div>
     </div>
   );
 } 
